@@ -34,10 +34,10 @@ static inline void	received_signal(int sig)
 int	main(int ac, char **av)
 {
 	int	i;
-    int pid;
+    	int	pid;
 
 	i = -1;
-    pid = ft_atoi(av[1]);
+    	pid = ft_atoi(av[1]);
 	if (ac == 3)
 	{
 		while (av[2][++i])
