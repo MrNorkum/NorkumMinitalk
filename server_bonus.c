@@ -32,5 +32,5 @@ int	main(int argc, char **argv)
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 	while (1)
-		;
+		pause();
 }
