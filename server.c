@@ -25,5 +25,5 @@ int	main(void)
 	signal(SIGUSR1, signal_handler);
 	signal(SIGUSR2, signal_handler);
 	while (1)
-		;
+		pause();
 }
