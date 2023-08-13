@@ -31,7 +31,7 @@ int	main(int ac, char **av)
 	int	pid;
 
 	i = -1;
-    pid = ft_atoi(av[1]);
+    	pid = ft_atoi(av[1]);
 	if (ac == 3)
 		while (av[2][++i])
 			signal_sender(pid, av[2][i]);
