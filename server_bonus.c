@@ -1,7 +1,7 @@
 #include "minitalk.h"
 #include <signal.h>
 
-static inline void	signal_handler(int signum, siginfo_t *info, void *context)
+static inline void	signal_handler(int sig, siginfo_t *info, void *context)
 {
 	static int	i;
 	static char	c;
