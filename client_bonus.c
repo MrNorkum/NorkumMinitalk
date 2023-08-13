@@ -42,8 +42,8 @@ int	main(int ac, char **av)
 	{
 		while (av[2][++i])
 			signal_sender(pid, av[2][i]);
-        signal(SIGUSR2, received_signal);
-        signal_sender(pid, '\0');
+        	signal(SIGUSR2, received_signal);
+        	signal_sender(pid, '\0');
 	}
 	else
 		ft_printf("CLIENT : FORMAT Error!\n");
