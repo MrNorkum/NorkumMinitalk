@@ -31,14 +31,12 @@ static inline void	signal_sender(int pid, char c)
 
 int	main(int ac, char **av)
 {
-	int	i;
 	int	pid;
 
-	i = -1;
 	pid = my_atoi(av[1], 1, 0, 0);
 	if (ac == 3)
-		while (av[2][++i])
-			signal_sender(pid, av[2][i]);
+		while (*av[2])
+			signal_sender(pid, *av[2]++);
 	else
 		ft_printf("CLIENT : FORMAT Error!\n");
 }
