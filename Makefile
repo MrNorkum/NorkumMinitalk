@@ -19,12 +19,9 @@ clean:
 	@$(RM) client server client_bonus server_bonus
 norm:
 	@norminette *.c *.h
-run: 
-	@re
+run: re
 	@./server
-brun:
-	@clean
-	@make bonus
+brun: clean bonus
 	@./server_bonus
 fclean: clean
 re: clean all
