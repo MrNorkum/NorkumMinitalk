@@ -16,14 +16,15 @@ static inline void	signal_handler(int sig, siginfo_t *info, void *context)
 	if (i == 8)
 	{
 		ft_printf("%c", c);
-        	kill(info->si_pid, SIGUSR2);
+		if (c == '\0')
+			kill(info->si_pid, SIGUSR2);
 		i = 0;
 		c = 0;
 	}
 }
 
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	struct sigaction	act;
 
