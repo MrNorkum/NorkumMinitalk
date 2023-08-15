@@ -16,7 +16,7 @@ static inline void	signal_handler(int sig, siginfo_t *info, void *context)
 	if (i == 8)
 	{
 		ft_printf("%c", c);
-		if (c == '\0')
+		if (!c)
 			kill(info->si_pid, SIGUSR2);
 		i = 0;
 		c = 0;
