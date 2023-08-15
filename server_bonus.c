@@ -9,7 +9,7 @@ static inline void	signal_handler(int sig, siginfo_t *info, void *context)
 	(void)context;
 	if (sig == SIGUSR1)
 		c = (c << 1) | 1;
-	else if (sig == SIGUSR2)
+	else
 		c = (c << 1);
 	i++;
 	if (i == 8)
