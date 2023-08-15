@@ -1,5 +1,6 @@
 #include "minitalk.h"
 #include <signal.h>
+#include <unistd.h>
 
 static inline int	my_atoi(const char *str, int sign, int res, int mod)
 {
