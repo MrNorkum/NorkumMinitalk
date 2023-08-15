@@ -8,7 +8,7 @@ static inline void	signal_handler(int sig)
 
 	if (sig == SIGUSR1)
 		c = (c << 1) | 1;
-	else if (sig == SIGUSR2)
+	else
 		c = (c << 1);
 	i++;
 	if (i == 8)
