@@ -37,15 +37,13 @@ static inline void	received_signal(int sig)
 
 int	main(int ac, char **av)
 {
-	int	i;
     	int	pid;
 
-	i = -1;
     	pid = my_atoi(av[1], 1, 0, 0);
 	if (ac == 3)
 	{
-		while (av[2][++i])
-			signal_sender(pid, av[2][i]);
+		while (*av[2])
+			signal_sender(pid, *av[2]++);
         	signal(SIGUSR2, received_signal);
         	signal_sender(pid, '\0');
 	}
