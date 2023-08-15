@@ -33,7 +33,6 @@ static inline void	signal_sender(int pid, char c)
 		else
 			kill(pid, SIGUSR2);
 		usleep(500);
-		signal(SIGUSR2, received_signal);
 	}
 }
 
@@ -44,6 +43,7 @@ int	main(int ac, char **av)
     	pid = my_atoi(av[1], 1, 0, 0);
 	if (ac == 3)
 	{
+		signal(SIGUSR2, received_signal);
 		while (*av[2])
 			signal_sender(pid, *av[2]++);
         	signal_sender(pid, '\0');
