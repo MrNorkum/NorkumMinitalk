@@ -1,5 +1,12 @@
 #include "minitalk.h"
 #include <signal.h>
+#include <unistd.h>
+
+static inline void	received_signal(int sig)
+{
+	if (sig == SIGUSR2)
+        ft_printf("Signal Received\n");
+}
 
 static inline int	my_atoi(const char *str, int sign, int res, int mod)
 {
@@ -26,13 +33,8 @@ static inline void	signal_sender(int pid, char c)
 		else
 			kill(pid, SIGUSR2);
 		usleep(500);
+		signal(SIGUSR2, received_signal);
 	}
-}
-
-static inline void	received_signal(int sig)
-{
-	if (sig == SIGUSR2)
-        ft_printf("Signal Received\n");
 }
 
 int	main(int ac, char **av)
@@ -44,7 +46,6 @@ int	main(int ac, char **av)
 	{
 		while (*av[2])
 			signal_sender(pid, *av[2]++);
-        	signal(SIGUSR2, received_signal);
         	signal_sender(pid, '\0');
 	}
 	else
