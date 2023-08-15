@@ -5,7 +5,7 @@
 static inline void	received_signal(int sig)
 {
 	if (sig == SIGUSR2)
-        ft_printf("Signal Received\n");
+		ft_printf("Signal Received\n");
 }
 
 static inline int	my_atoi(const char *str, int sign, int res, int mod)
