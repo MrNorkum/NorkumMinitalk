@@ -26,7 +26,7 @@ static inline void	signal_sender(int pid, char c)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(500);
+		usleep(200);
 	}
 }
 
