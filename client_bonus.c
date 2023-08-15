@@ -1,13 +1,17 @@
 #include "minitalk.h"
 #include <signal.h>
 
-static inline int	ft_atoi(const char *str)
+static inline int	my_atoi(const char *str, int sign, int res, int mod)
 {
-	static int	res;
-
-	while ('0' <= *str && *str <= '9')
-		res = res * 10 + *str++ - 48;
-	return (res);
+	if (((9 <= *str && *str <= 13) || *str == 32) && mod == 0)
+		return (my_atoi(str + 1, 1, 0, 0));
+	if (*str == 43 && mod == 0)
+		return (my_atoi(str + 1, 1, 0, 1));
+	if (*str == 45 && mod == 0)
+	    return (my_atoi(str + 1, -1, 0, 1));
+	if ('0' <= *str && *str <= '9')
+		return (my_atoi(str + 1, sign, res = res * 10 + *str - 48, 1));
+	return (res * sign);
 }
 
 static inline void	signal_sender(int pid, char c)
@@ -37,7 +41,7 @@ int	main(int ac, char **av)
     	int	pid;
 
 	i = -1;
-    	pid = ft_atoi(av[1]);
+    	pid = my_atoi(av[1], 1, 0, 0);
 	if (ac == 3)
 	{
 		while (av[2][++i])
