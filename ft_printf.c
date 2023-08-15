@@ -28,9 +28,9 @@ static inline int	ft_itoa_base2(uintptr_t nbr, int base, char *str, int len)
 	}
 	while (i--)
 	{
-		len++;
 		if (write(1, &str[tab[i]], 1) == -1)
 			return (-1);
+		len++;
 	}
 	return (len);
 }
