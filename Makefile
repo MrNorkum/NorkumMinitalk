@@ -1,5 +1,7 @@
 RM = rm -rf
-CMPL = gcc -Wall -Wextra -Werror
+CC = gcc
+FLAG = -Wall -Wextra -Werror
+CMPL = $(CC) $(FLAG)
 CLIENT = @$(CMPL) client.c ft_printf.c -o client
 SERVER = @$(CMPL) server.c ft_printf.c -o server
 CLIENTBONUS = @$(CMPL) client_bonus.c ft_printf.c -o client_bonus
