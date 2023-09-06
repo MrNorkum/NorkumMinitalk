@@ -1,5 +1,4 @@
 #include "minitalk.h"
-#include <signal.h>
 
 static inline void	received_signal(int sig)
 {

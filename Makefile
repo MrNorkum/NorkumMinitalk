@@ -2,25 +2,25 @@ RM = rm -rf
 CC = gcc
 FLAG = -Wall -Wextra -Werror
 CMPL = $(CC) $(FLAG)
-CLIENT = @$(CMPL) client.c ft_printf.c -o client
-SERVER = @$(CMPL) server.c ft_printf.c -o server
-CLIENTBONUS = @$(CMPL) client_bonus.c ft_printf.c -o client_bonus
-SERVERBONUS = @$(CMPL) server_bonus.c ft_printf.c -o server_bonus
+CLIENT = client
+SERVER = server
+BCLIENT = client_bonus
+BSERVER = server_bonus
 
-all: client server
-client:
-	$(CLIENT)
-server:
-	$(SERVER)
-bonus: client_bonus server_bonus
-client_bonus:
-	$(CLIENTBONUS)
-server_bonus:
-	$(SERVERBONUS)
+all: $(CLIENT) $(SERVER)
+$(CLIENT):
+	$(CMPL) client.c ft_printf.c -o $(CLIENT)
+$(SERVER):
+	$(CMPL) server.c ft_printf.c -o $(SERVER)
+bonus: $(BCLIENT) $(BSERVER)
+$(BCLIENT):
+	$(CMPL) client.c ft_printf.c -o $(BCLIENT)
+$(BSERVER):
+	$(CMPL) server.c ft_printf.c -o $(BSERVER)
 clean:
-	@$(RM) client server client_bonus server_bonus
+	@$(RM) $(CLIENT) $(SERVER) $(BCLIENT) $(BSERVER)
 norm:
-	@norminette *.c *.h
+	@norminette
 run: re
 	@./server
 brun: clean bonus

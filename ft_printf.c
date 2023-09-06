@@ -1,112 +1,87 @@
 #include "minitalk.h"
-#include <stdarg.h>
-#include <stdint.h>
 
-static inline int	ft_putstr(char *str)
+static inline int	my_putchar(char c, t_printf *x)
 {
-	int	len;
-
-	len = -1;
-	if (!str)
-		str = "(null)";
-	while (str[++len])
-		if (write(1, &str[len], 1) == -1)
-			return (-1);
-	return (len);
+	return (x->len++, write(1, &c, 1));
 }
 
-static inline int	ft_itoa_base2(uintptr_t nbr, int base, char *str, int len)
+static inline int	my_putstring(char *s, t_printf *x)
 {
-	int	tab[100];
+	if (!s)
+		s = "(null)";
+	while (*s)
+		if (my_putchar(*s++, x) == -1)
+			return (-1);
+	return (1);
+}
+
+static inline int	my_itoa(ULL n, int base, char *s, t_printf *x)
+{
+	int	tab[50];
+	int	mod;
 	int	i;
 
+	mod = (x->f == 'd' || x->f == 'i') + 2 * (x->f == 'p');
 	i = 0;
-	while (nbr)
+	if (mod == 1 && (int)n < 0)
 	{
-		tab[i++] = nbr % base;
-		nbr /= base;
+		n = -n;
+		if (my_putchar('-', x) == -1)
+			return (-1);
+	}
+	if (mod == 2 && my_putstring("0x", x) == -1)
+		return (-1);
+	if (!n)
+		return (my_putchar('0', x));
+	while (n)
+	{
+		tab[i++] = n % base;
+		n /= base;
 	}
 	while (i--)
-	{
-		if (write(1, &str[tab[i]], 1) == -1)
+		if (my_putchar(s[tab[i]], x) == -1)
 			return (-1);
-		len++;
-	}
-	return (len);
+	return (1);
 }
 
-static inline int	ft_itoa_base(uintptr_t nbr, int base, char *str, int mod)
+static inline int	my_format(t_printf *x)
 {
-	int	len;
-
-	len = 0;
-	if (mod == 1 && (int)nbr < 0)
-	{
-		nbr *= -1;
-		if (write(1, "-", 1) == -1)
-			return (-1);
-		len++;
-	}
-	if (mod == 2)
-	{
-		if (write(1, "0x", 2) == -1)
-			return (-1);
-		len += 2;
-	}
-	if (nbr == 0)
-	{
-		if (write(1, "0", 1) == -1)
-			return (-1);
-		return (len + 1);
-	}
-	return (ft_itoa_base2(nbr, base, str, len));
-}
-
-static inline int	ft_format(va_list args, char format)
-{
-	if (format == 'c')
-		return (format = va_arg(args, int), write(1, &format, 1));
-	else if (format == 's')
-		return (ft_putstr(va_arg(args, char *)));
-	else if (format == 'u')
-		return (ft_itoa_base(va_arg(args, unsigned int), 10, "0123456789", 0));
-	else if (format == 'd' || format == 'i')
-		return (ft_itoa_base(va_arg(args, int), 10, "0123456789", 1));
-	else if (format == 'p')
-		return (ft_itoa_base(va_arg(args, uintptr_t), 
-			16, "0123456789abcdef", 2));
-	else if (format == 'x')
-		return (ft_itoa_base(va_arg(args, unsigned int),
-			16, "0123456789abcdef", 0));
-	else if (format == 'X')
-		return (ft_itoa_base(va_arg(args, unsigned int),
-			16, "0123456789ABCDEF", 0));
-	else if (format == '%')
-		return (write(1, "%", 1));
+	if (x->f == 'c')
+		return (my_putchar(va_arg(x->args, int), x));
+	else if (x->f == 's')
+		return (my_putstring(va_arg(x->args, char *), x));
+	else if (x->f == 'u')
+		return (my_itoa(va_arg(x->args, unsigned int), 10, DEC, x));
+	else if (x->f == 'd' || x->f == 'i')
+		return (my_itoa(va_arg(x->args, int), 10, DEC, x));
+	else if (x->f == 'p')
+		return (my_itoa(va_arg(x->args, ULL), 16, HEXLOW, x));
+	else if (x->f == 'x')
+		return (my_itoa(va_arg(x->args, unsigned int), 16, HEXLOW, x));
+	else if (x->f == 'X')
+		return (my_itoa(va_arg(x->args, unsigned int), 16, HEXUP, x));
+	else if (x->f == '%')
+		return (my_putchar('%', x));
 	return (-1);
 }
 
-int	ft_printf(const char *str, ...)
+int	ft_printf(const char *s, ...)
 {
-	int	len;
-	int	tmp;
-	va_list	args;
+	t_printf	x;
 
-	len = 0;
-	va_start(args, str);
-	while (*str)
+	x.len = 0;
+	va_start(x.args, s);
+	while (*s)
 	{
-		tmp = 1;
-		if (*str == '%')
+		if (*s == '%')
 		{
-			tmp = ft_format(args, *++str);
-			if (tmp == -1)
+			x.f = *++s;
+			if (my_format(&x) == -1)
 				return (-1);
 		}
-		else if (write(1, str, 1) == -1)
+		else if (my_putchar(*s, &x) == -1)
 			return (-1);
-		str++;
-		len += tmp;
+		s++;
 	}
-	return (va_end(args), len);
+	return (va_end(x.args), x.len);
 }
