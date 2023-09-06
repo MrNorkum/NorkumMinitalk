@@ -2,8 +2,8 @@
 
 static inline void	signal_handler(int sig)
 {
-	static int	i;
-	static char	c;
+	static int	i = 0;
+	static char	c = 0;
 
 	if (sig == SIGUSR1)
 		c = (c << 1) | 1;

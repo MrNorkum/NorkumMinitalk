@@ -2,8 +2,8 @@
 
 static inline void	signal_handler(int sig, siginfo_t *info, void *context)
 {
-	static int	i;
-	static char	c;
+	static int	i = 0;
+	static char	c = 0;
 
 	(void)context;
 	if (sig == SIGUSR1)
@@ -26,9 +26,9 @@ int	main(void)
 {
 	struct sigaction	act;
 
-    	act.sa_flags = SA_SIGINFO;
-    	act.sa_sigaction = &signal_handler;
-    	ft_printf("SERVER : Server Started\nPID -> %d\n", getpid());
+    act.sa_flags = SA_SIGINFO;
+	act.sa_sigaction = &signal_handler;
+	ft_printf("SERVER : Server Started\nPID -> %d\n", getpid());
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 	while (1)

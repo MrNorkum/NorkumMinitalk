@@ -13,7 +13,7 @@ static inline int	my_atoi(const char *str, int sign, int res, int mod)
 	if (*str == 43 && mod == 0)
 		return (my_atoi(str + 1, 1, 0, 1));
 	if (*str == 45 && mod == 0)
-	    	return (my_atoi(str + 1, -1, 0, 1));
+	    return (my_atoi(str + 1, -1, 0, 1));
 	if ('0' <= *str && *str <= '9')
 		return (my_atoi(str + 1, sign, res * 10 + *str - 48, 1));
 	return (res * sign);
@@ -30,21 +30,21 @@ static inline void	signal_sender(int pid, char c)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(200);
+		usleep(150);
 	}
 }
 
 int	main(int ac, char **av)
 {
-    	int	pid;
+	int	pid;
 
-    	pid = my_atoi(av[1], 1, 0, 0);
+    pid = my_atoi(av[1], 1, 0, 0);
 	if (ac == 3)
 	{
 		signal(SIGUSR2, received_signal);
 		while (*av[2])
 			signal_sender(pid, *av[2]++);
-        	signal_sender(pid, '\0');
+        signal_sender(pid, '\0');
 	}
 	else
 		return (ft_printf("CLIENT : FORMAT Error!\n"), 1);
