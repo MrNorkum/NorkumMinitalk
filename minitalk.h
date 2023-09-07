@@ -9,7 +9,7 @@
 # define HEXLOW "0123456789abcdef"
 # define HEXUP "0123456789ABCDEF"
 
-typedef unsigned long	t_ull;
+typedef unsigned long long	t_ull;
 
 typedef struct s_printf
 {
