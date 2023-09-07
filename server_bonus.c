@@ -21,12 +21,11 @@ static inline void	signal_handler(int sig, siginfo_t *info, void *context)
 	}
 }
 
-
 int	main(void)
 {
 	struct sigaction	act;
 
-    act.sa_flags = SA_SIGINFO;
+	act.sa_flags = SA_SIGINFO;
 	act.sa_sigaction = &signal_handler;
 	ft_printf("SERVER : Server Started\nPID -> %d\n", getpid());
 	sigaction(SIGUSR1, &act, NULL);
