@@ -2,23 +2,23 @@ RM = rm -rf
 CC = gcc
 FLAG = -Wall -Wextra -Werror
 CMPL = $(CC) $(FLAG)
-CLIENT = client
-SERVER = server
-BCLIENT = client_bonus
-BSERVER = server_bonus
+C_NAME = client
+S_NAME = server
+C_NAME_B = client_bonus
+S_NAME_B = server_bonus
 
-all: $(CLIENT) $(SERVER)
-$(CLIENT):
-	$(CMPL) client.c ft_printf.c -o $(CLIENT)
-$(SERVER):
-	$(CMPL) server.c ft_printf.c -o $(SERVER)
-bonus: $(BCLIENT) $(BSERVER)
-$(BCLIENT):
-	$(CMPL) client.c ft_printf.c -o $(BCLIENT)
-$(BSERVER):
-	$(CMPL) server.c ft_printf.c -o $(BSERVER)
+all: $(C_NAME) $(S_NAME)
+$(C_NAME):
+	@$(CMPL) client.c ft_printf.c -o $(C_NAME)
+$(S_NAME):
+	@$(CMPL) server.c ft_printf.c -o $(S_NAME)
+bonus: $(C_NAME_B) $(S_NAME_B)
+$(C_NAME_B):
+	@$(CMPL) client_bonus.c ft_printf.c -o $(C_NAME_B)
+$(S_NAME_B):
+	@$(CMPL) server_bonus.c ft_printf.c -o $(S_NAME_B)
 clean:
-	@$(RM) $(CLIENT) $(SERVER) $(BCLIENT) $(BSERVER)
+	@$(RM) $(C_NAME) $(S_NAME) $(C_NAME_B) $(S_NAME_B)
 norm:
 	@norminette
 run: re
