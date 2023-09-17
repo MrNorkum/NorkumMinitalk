@@ -47,6 +47,6 @@ int	main(int ac, char **av)
 		signal_sender(pid, '\0');
 	}
 	else
-		return (ft_printf("CLIENT : FORMAT Error!\n"), 1);
+		return (ft_printf("%s\n", ERROR), 1);
 	return (0);
 }

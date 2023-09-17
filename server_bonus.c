@@ -27,7 +27,7 @@ int	main(void)
 
 	act.sa_flags = SA_SIGINFO;
 	act.sa_sigaction = &signal_handler;
-	ft_printf("SERVER : Server Started\nPID -> %d\n", getpid());
+	ft_printf("%s%d\n", START, getpid());
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 	while (1)
