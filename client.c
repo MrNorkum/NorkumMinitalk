@@ -37,6 +37,6 @@ int	main(int ac, char **av)
 		while (*av[2])
 			signal_sender(pid, *av[2]++);
 	else
-		return (ft_printf("%s\n", ERROR), 1);
+		return (ft_printf("%s", ERROR), 1);
 	return (0);
 }

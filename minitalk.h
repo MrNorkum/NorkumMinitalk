@@ -9,7 +9,7 @@
 # define HEXLOW "0123456789abcdef"
 # define HEXUP "0123456789ABCDEF"
 # define START "SERVER : Server Started\nPID -> "
-# define ERROR "CLIENT : FORMAT Error! -> ./client <PID> <STRING to send>"
+# define ERROR "\nCLIENT : FORMAT Error!\n\n-> ./client <PID> <STRING to send>\n\n"
 
 typedef struct s_printf
 {

@@ -6,16 +6,12 @@ static inline void	signal_handler(int sig, siginfo_t *info, void *context)
 	static char	c = 0;
 
 	(void)context;
-	if (sig == SIGUSR1)
-		c = (c << 1) | 1;
-	else
-		c = (c << 1);
+	c = (c << 1) | (sig == SIGUSR1);
 	i++;
 	if (i == 8)
 	{
 		ft_printf("%c", c);
-		if (!c)
-			kill(info->si_pid, SIGUSR2);
+		kill(info->si_pid, SIGUSR2 * (!c));
 		i = 0;
 		c = 0;
 	}

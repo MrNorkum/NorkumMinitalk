@@ -5,10 +5,7 @@ static inline void	signal_handler(int sig)
 	static int	i = 0;
 	static char	c = 0;
 
-	if (sig == SIGUSR1)
-		c = (c << 1) | 1;
-	else
-		c = (c << 1);
+	c = (c << 1) | (sig == SIGUSR1);
 	i++;
 	if (i == 8)
 	{

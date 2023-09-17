@@ -23,8 +23,9 @@ norm:
 	@norminette
 run: re
 	@./server
-brun: clean bonus
+brun: bre
 	@./server_bonus
 fclean: clean
 re: clean all
+bre: clean bonus
 .PHONY: all bonus clean fclean re
