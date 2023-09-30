@@ -1,15 +1,22 @@
 #include "minitalk.h"
+#include <signal.h>
 
-static inline int	my_atoi(const char *str, int sign, int res, int mod)
+static inline void	received_signal(int sig)
 {
-	if (((9 <= *str && *str <= 13) || *str == 32) && mod == 0)
-		return (my_atoi(str + 1, 1, 0, 0));
-	if (*str == 43 && mod == 0)
-		return (my_atoi(str + 1, 1, 0, 1));
-	if (*str == 45 && mod == 0)
-		return (my_atoi(str + 1, -1, 0, 1));
-	if ('0' <= *str && *str <= '9')
-		return (my_atoi(str + 1, sign, res * 10 + *str - 48, 1));
+	if (sig == SIGUSR2)
+		ft_printf("Signal Received\n");
+}
+
+static inline int	my_atoi(const char *s, char sign, int res, char mod)
+{
+	if (((9 <= *s && *s <= 13) || *s == 32) && !mod)
+		return (my_atoi(s + 1, 1, 0, 0));
+	if (*s == 43 && !mod)
+		return (my_atoi(s + 1, 1, 0, 1));
+	if (*s == 45 && !mod)
+		return (my_atoi(s + 1, -1, 0, 1));
+	if ('0' <= *s && *s <= '9')
+		return (my_atoi(s + 1, sign, (res * 10) + (*s & 15), 1));
 	return (res * sign);
 }
 
@@ -32,10 +39,14 @@ int	main(int ac, char **av)
 {
 	int	pid;
 
-	pid = my_atoi(av[1], 1, 0, 0);
 	if (ac == 3)
+	{
+		pid = my_atoi(av[1], 1, 0, 0);
+		signal(SIGUSR2, received_signal);
 		while (*av[2])
 			signal_sender(pid, *av[2]++);
+		signal_sender(pid, '\0');
+	}
 	else
 		return (ft_printf("%s", ERROR), 1);
 	return (0);

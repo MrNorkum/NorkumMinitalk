@@ -4,28 +4,28 @@ FLAG = -Wall -Wextra -Werror
 CMPL = $(CC) $(FLAG)
 C_NAME = client
 S_NAME = server
-C_NAME_B = client_bonus
-S_NAME_B = server_bonus
+C_SRC = client.c ft_printf.c
+S_SRC = server.c ft_printf.c
 
 all: $(C_NAME) $(S_NAME)
+
 $(C_NAME):
-	@$(CMPL) client.c ft_printf.c -o $(C_NAME)
+	@$(CMPL) $(C_SRC) -o $(C_NAME)
+
 $(S_NAME):
-	@$(CMPL) server.c ft_printf.c -o $(S_NAME)
-bonus: $(C_NAME_B) $(S_NAME_B)
-$(C_NAME_B):
-	@$(CMPL) client_bonus.c ft_printf.c -o $(C_NAME_B)
-$(S_NAME_B):
-	@$(CMPL) server_bonus.c ft_printf.c -o $(S_NAME_B)
+	@$(CMPL) $(S_SRC) -o $(S_NAME)
+
 clean:
-	@$(RM) $(C_NAME) $(S_NAME) $(C_NAME_B) $(S_NAME_B)
+	@$(RM) $(C_NAME) $(S_NAME)
+
+fclean: clean
+
+re: fclean all
+
 norm:
 	@norminette
+
 run: re
 	@./server
-brun: bre
-	@./server_bonus
-fclean: clean
-re: clean all
-bre: clean bonus
-.PHONY: all bonus clean fclean re
+
+.PHONY: all clean fclean re run norm

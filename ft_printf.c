@@ -18,12 +18,12 @@ static inline int	my_putstring(char *s, t_printf *x)
 
 static inline int	my_itoa(uintptr_t n, int base, char *s, t_printf *x)
 {
-	int	tab[50];
+	int	arr[25];
 	int	mod;
 	int	i;
 
-	mod = (x->f == 'd' || x->f == 'i') + 2 * (x->f == 'p');
 	i = 0;
+	mod = (x->f == 'd' || x->f == 'i') + 2 * (x->f == 'p');
 	if (mod == 1 && (int)n < 0)
 	{
 		n = -n;
@@ -32,15 +32,15 @@ static inline int	my_itoa(uintptr_t n, int base, char *s, t_printf *x)
 	}
 	if (mod == 2 && my_putstring("0x", x) == -1)
 		return (-1);
-	if (!n)
-		return (my_putchar('0', x));
+	if (!n && my_putchar('0', x) == -1)
+		return (-1);
 	while (n)
 	{
-		tab[i++] = n % base;
+		arr[i++] = n % base;
 		n /= base;
 	}
 	while (i--)
-		if (my_putchar(s[tab[i]], x) == -1)
+		if (my_putchar(s[arr[i]], x) == -1)
 			return (-1);
 	return (1);
 }
