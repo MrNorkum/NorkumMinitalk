@@ -1,5 +1,20 @@
-#include "minitalk.h"
+#include <unistd.h>
 #include <signal.h>
+
+static void	my_putnbr(long n)
+{
+	if (n > 9)
+		my_putnbr(n / 10);
+	write(1, &"0123456789"[n % 10], 1);
+}
+
+static void	start_server(void)
+{
+	write(1, "$------------$\n", 15);
+	write(1, "PID ~> ", 8);
+	my_putnbr(getpid());
+	write(1, "\n$------------$\n", 16);
+}
 
 static inline void	signal_handler(int sig, siginfo_t *info, void *context)
 {
@@ -11,7 +26,7 @@ static inline void	signal_handler(int sig, siginfo_t *info, void *context)
 	i++;
 	if (i == 8)
 	{
-		ft_printf("%c", c);
+		write(1, &c, 1);
 		kill(info->si_pid, SIGUSR2 * (!c));
 		i = 0;
 		c = 0;
@@ -24,7 +39,7 @@ int	main(void)
 
 	x.sa_flags = SA_SIGINFO;
 	x.sa_sigaction = &signal_handler;
-	printf("%s%d\n", START, getpid());
+	start_server();
 	sigaction(SIGUSR1, &x, NULL);
 	sigaction(SIGUSR2, &x, NULL);
 	while (1)
