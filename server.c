@@ -1,7 +1,8 @@
 #include <unistd.h>
 #include <signal.h>
+#include <stdbool.h>
 
-static void	my_putnbr(long n)
+static void	my_putnbr(int n)
 {
 	if (n > 9)
 		my_putnbr(n / 10);
@@ -14,12 +15,13 @@ static void	start_server(void)
 	write(1, "PID ~> ", 8);
 	my_putnbr(getpid());
 	write(1, "\n$------------$\n", 16);
+	write(1, "\n~> ", 4);
 }
 
-static inline void	signal_handler(int sig, siginfo_t *info, void *context)
+static void	signal_handler(int sig, siginfo_t *info, void *context)
 {
-	static int	i = 0;
-	static char	c = 0;
+	static unsigned char	i = 0;
+	static unsigned char	c = 0;
 
 	(void)context;
 	c = (c << 1) | (sig == SIGUSR1);
@@ -42,6 +44,6 @@ int	main(void)
 	start_server();
 	sigaction(SIGUSR1, &x, NULL);
 	sigaction(SIGUSR2, &x, NULL);
-	while (1)
+	while (true)
 		pause();
 }
