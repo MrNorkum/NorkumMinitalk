@@ -50,6 +50,8 @@ int	main(int ac, char **av)
 	if (ac == 3)
 	{
 		pid = my_atoi(av[1], false, 0, false);
+		if (pid == -1)
+			return (-1);
 		signal(SIGUSR2, received_signal);
 		while (*av[2])
 			signal_sender(pid, *av[2]++);
