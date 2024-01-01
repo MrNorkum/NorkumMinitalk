@@ -24,12 +24,12 @@ static void	signal_handler(int sig, siginfo_t *info, void *context)
 	static unsigned char	c = 0;
 
 	(void)context;
-	c = (c << 1) | (sig == SIGUSR1);
+	c = (c << 1) | !!(sig == SIGUSR1);
 	i++;
 	if (i == 8)
 	{
 		write(1, &c, 1);
-		kill(info->si_pid, SIGUSR2 * (!c));
+		kill(info->si_pid, SIGUSR2 * !c);
 		i = 0;
 		c = 0;
 	}
