@@ -16,16 +16,16 @@ static char	err_client(void)
 	return (1);
 }
 
-static int	my_atoi(const char *s, bool sign, int res, bool mod)
+static int	mr_atoi(const char *s, bool sign, int res, bool mod)
 {
 	if (((9 <= *s && *s <= 13) || *s == 32) && !mod)
-		return (my_atoi(s + 1, false, 0, false));
+		return (mr_atoi(s + 1, false, 0, false));
 	if (*s == 43 && !mod)
-		return (my_atoi(s + 1, false, 0, true));
+		return (mr_atoi(s + 1, false, 0, true));
 	if (*s == 45 && !mod)
-		return (my_atoi(s + 1, true, 0, true));
+		return (mr_atoi(s + 1, true, 0, true));
 	if ('0' <= *s && *s <= '9')
-		return (my_atoi(s + 1, sign, (res * 10) + (*s & 15), true));
+		return (mr_atoi(s + 1, sign, (res * 10) + (*s & 15), true));
 	if (sign)
 		return (1 + ~res);
 	return (res);
@@ -49,7 +49,7 @@ int	main(int ac, char **av)
 
 	if (ac == 3)
 	{
-		pid = my_atoi(av[1], false, 0, false);
+		pid = mr_atoi(av[1], false, 0, false);
 		if (pid == -1)
 			return (-1);
 		signal(SIGUSR2, received_signal);
