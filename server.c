@@ -2,10 +2,10 @@
 #include <signal.h>
 #include <stdbool.h>
 
-static void	my_putnbr(int n)
+static void	mr_putnbr(int n)
 {
 	if (n > 9)
-		my_putnbr(n / 10);
+		mr_putnbr(n / 10);
 	write(1, &"0123456789"[n % 10], 1);
 }
 
@@ -26,13 +26,10 @@ static void	signal_handler(int sig, siginfo_t *info, void *context)
 	(void)context;
 	c = (c << 1) | !!(sig == SIGUSR1);
 	i++;
-	if (i == 8)
-	{
-		write(1, &c, 1);
-		kill(info->si_pid, SIGUSR2 * !c);
-		i = 0;
-		c = 0;
-	}
+	write(1, &c, (i == 8));
+	kill(info->si_pid, SIGUSR2 * (!c && i == 8));
+	i = !(i == 8) * i;
+	c = !(i == 8) * c;
 }
 
 int	main(void)
