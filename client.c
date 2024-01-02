@@ -31,16 +31,14 @@ static pid_t	mr_atoi(const char *s, bool sign, pid_t res, bool mod)
 	return (res);
 }
 
-static void	signal_sender(pid_t pid, char c)
+static void	signal_sender(pid_t pid, char c, unsigned char i)
 {
-	register int	i;
-
-	i = -1;
-	while (++i < 8)
+	if (i > 0)
 	{
-		kill(pid, SIGUSR1 + !(c << i & 128));
+		signal_sender(pid, c, i - 1);
 		usleep(200);
 	}
+	kill(pid, SIGUSR1 + !(c << i & 128));
 }
 
 int	main(int argc, char *argv[])
@@ -54,8 +52,8 @@ int	main(int argc, char *argv[])
 			return (-1);
 		signal(SIGUSR2, received_signal);
 		while (*argv[2])
-			signal_sender(pid, *argv[2]++);
-		signal_sender(pid, '\0');
+			signal_sender(pid, *argv[2]++, 7);
+		signal_sender(pid, '\0', 7);
 		return (0);
 	}
 	return (err_client());
