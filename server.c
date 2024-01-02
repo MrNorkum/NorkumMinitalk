@@ -26,7 +26,7 @@ static void	signal_handler(int sig, siginfo_t *info, void *context)
 	(void)context;
 	c = (c << 1) | !!(sig == SIGUSR1);
 	i++;
-	write(1, &c, (i == 8));
+	write(1, &c, !!(i == 8));
 	kill(info->si_pid, SIGUSR2 * (!c && i == 8));
 	i = !(i == 8) * i;
 }
