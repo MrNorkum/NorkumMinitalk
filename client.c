@@ -16,7 +16,7 @@ static char	err_client(void)
 	return (1);
 }
 
-static int	mr_atoi(const char *s, bool sign, int res, bool mod)
+static pid_t	mr_atoi(const char *s, bool sign, int res, bool mod)
 {
 	if (((9 <= *s && *s <= 13) || *s == 32) && !mod)
 		return (mr_atoi(s + 1, false, 0, false));
@@ -31,7 +31,7 @@ static int	mr_atoi(const char *s, bool sign, int res, bool mod)
 	return (res);
 }
 
-static void	signal_sender(int pid, char c)
+static void	signal_sender(pid_t pid, char c)
 {
 	register int	i;
 
@@ -43,18 +43,18 @@ static void	signal_sender(int pid, char c)
 	}
 }
 
-int	main(int ac, char **av)
+int	main(int argc, char *argv[])
 {
-	register int	pid;
+	register pid_t	pid;
 
-	if (ac == 3)
+	if (argc == 3)
 	{
-		pid = mr_atoi(av[1], false, 0, false);
+		pid = mr_atoi(argv[1], false, 0, false);
 		if (pid == -1)
 			return (-1);
 		signal(SIGUSR2, received_signal);
-		while (*av[2])
-			signal_sender(pid, *av[2]++);
+		while (*argv[2])
+			signal_sender(pid, *argv[2]++);
 		signal_sender(pid, '\0');
 		return (0);
 	}
