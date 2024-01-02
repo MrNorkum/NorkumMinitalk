@@ -13,7 +13,7 @@ static void	start_server(void)
 {
 	write(1, "$------------$\n", 15);
 	write(1, "PID ~> ", 8);
-	my_putnbr(getpid());
+	mr_putnbr(getpid());
 	write(1, "\n$------------$\n", 16);
 	write(1, "\n~> ", 4);
 }
@@ -29,7 +29,6 @@ static void	signal_handler(int sig, siginfo_t *info, void *context)
 	write(1, &c, (i == 8));
 	kill(info->si_pid, SIGUSR2 * (!c && i == 8));
 	i = !(i == 8) * i;
-	c = !(i == 8) * c;
 }
 
 int	main(void)
