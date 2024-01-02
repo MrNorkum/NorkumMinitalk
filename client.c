@@ -34,11 +34,9 @@ static pid_t	mr_atoi(const char *s, bool sign, pid_t res, bool mod)
 static void	signal_sender(pid_t pid, char c, unsigned char i)
 {
 	if (i > 0)
-	{
 		signal_sender(pid, c, i - 1);
-		usleep(200);
-	}
 	kill(pid, SIGUSR1 + !(c << i & 128));
+	usleep(200);
 }
 
 int	main(int argc, char *argv[])
