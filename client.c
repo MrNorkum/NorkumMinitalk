@@ -16,7 +16,7 @@ static char	err_client(void)
 	return (1);
 }
 
-static pid_t	mr_atoi(const char *s, bool sign, int res, bool mod)
+static pid_t	mr_atoi(const char *s, bool sign, pid_t res, bool mod)
 {
 	if (((9 <= *s && *s <= 13) || *s == 32) && !mod)
 		return (mr_atoi(s + 1, false, 0, false));
