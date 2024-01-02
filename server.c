@@ -11,7 +11,7 @@ static void	mr_putnbr(int n)
 
 static void	start_server(void)
 {
-	write(1, "$------------$\n", 15);
+	write(1, "\n$------------$\n", 16);
 	write(1, "PID ~> ", 8);
 	mr_putnbr(getpid());
 	write(1, "\n$------------$\n", 16);
